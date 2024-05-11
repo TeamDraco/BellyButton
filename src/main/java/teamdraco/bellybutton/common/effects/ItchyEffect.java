@@ -17,7 +17,7 @@ public class ItchyEffect extends MobEffect {
         float f = entity.getArmorCoverPercentage();
 
         if (entity.getHealth() > 1.0F) {
-            entity.hurt(DamageSource.GENERIC, f * 4.0F);
+            entity.hurt(DamageSource.MAGIC, f * 4.0F);
         }
     }
 
