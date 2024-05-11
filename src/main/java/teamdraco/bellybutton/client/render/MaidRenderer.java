@@ -20,7 +20,7 @@ public class MaidRenderer extends IllagerRenderer<MaidEntity> {
         super(manager, new IllagerModel<>(manager.bakeLayer(MAID)), 0.5F);
 
         this.addLayer(new VacuumHeldItemLayer<>(this));
-        this.addLayer(new CustomHeadLayer<>(this, manager.getModelSet()));
+        this.addLayer(new CustomHeadLayer<>(this, manager.getModelSet(), manager.getItemInHandRenderer()));
         this.model.getHat().visible = true;
     }
 

@@ -6,6 +6,7 @@ import net.minecraft.nbt.ListTag;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundEvents;
+import net.minecraft.util.RandomSource;
 import net.minecraft.world.DifficultyInstance;
 import net.minecraft.world.SimpleContainer;
 import net.minecraft.world.damagesource.DamageSource;
@@ -27,6 +28,7 @@ import net.minecraft.world.entity.raid.Raider;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.ServerLevelAccessor;
 import net.minecraft.world.phys.HitResult;
 import net.minecraftforge.api.distmarker.Dist;
@@ -100,7 +102,7 @@ public class MaidEntity extends SpellcasterIllager {
         return Monster.createMobAttributes().add(Attributes.MAX_HEALTH, 20.0D).add(Attributes.MOVEMENT_SPEED, 0.5D);
     }
 
-    public static boolean canMaidSpawn(EntityType<? extends MaidEntity> type, BlockGetter worldIn, MobSpawnType reason, BlockPos pos, Random randomIn) {
+    public static boolean canMaidSpawn(EntityType<? extends MaidEntity> type, LevelAccessor worldIn, MobSpawnType reason, BlockPos pos, RandomSource randomIn) {
         return worldIn.getLightEmission(pos) < 10 && randomIn.nextFloat() < 0.2;
     }
 
@@ -132,7 +134,7 @@ public class MaidEntity extends SpellcasterIllager {
     }
 
     @Override
-    protected void populateDefaultEquipmentSlots(DifficultyInstance difficulty) {
+    protected void populateDefaultEquipmentSlots(RandomSource rand, DifficultyInstance difficulty) {
         this.setItemSlot(EquipmentSlot.MAINHAND, new ItemStack(BBItems.VACUUM.get()));
     }
 

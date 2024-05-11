@@ -12,6 +12,7 @@ import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.common.capabilities.RegisterCapabilitiesEvent;
 import net.minecraftforge.event.AttachCapabilitiesEvent;
 import net.minecraftforge.event.entity.EntityAttributeCreationEvent;
+import net.minecraftforge.event.entity.SpawnPlacementRegisterEvent;
 import net.minecraftforge.event.entity.player.PlayerEvent;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.fml.common.Mod;
@@ -25,7 +26,6 @@ import teamdraco.bellybutton.common.entities.MaidEntity;
 import teamdraco.bellybutton.registry.*;
 
 @Mod(BellyButton.MOD_ID)
-@Mod.EventBusSubscriber(modid = BellyButton.MOD_ID, bus = Mod.EventBusSubscriber.Bus.FORGE)
 public class BellyButton {
     public static final String MOD_ID = "bellybutton";
 
@@ -36,6 +36,7 @@ public class BellyButton {
         bus.addListener(this::registerCommon);
         bus.addListener(this::registerEntityAttributes);
         bus.addListener(this::registerCapabilities);
+        bus.addListener(this::registerSpawnPlacements);
 
         forgeBus.addGenericListener(Entity.class, this::attachCapabilitiesPlayer);
         forgeBus.addListener(this::onPlayerCloned);
@@ -47,12 +48,16 @@ public class BellyButton {
         BBItems.ITEMS.register(bus);
         BBBlocks.BLOCKS.register(bus);
         BBEntities.ENTITIES.register(bus);
+        BBStructureModifiers.STRUCTURE_MODIFIERS.register(bus);
         BBPoiTypes.POIS.register(bus);
     }
 
+    private void registerSpawnPlacements(SpawnPlacementRegisterEvent e) {
+        e.register(BBEntities.DUST_BUNNY.get(), SpawnPlacements.Type.ON_GROUND, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, DustBunnyEntity::canBunnySpawn, SpawnPlacementRegisterEvent.Operation.OR);
+        e.register(BBEntities.MAID.get(), SpawnPlacements.Type.ON_GROUND, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, MaidEntity::canMaidSpawn, SpawnPlacementRegisterEvent.Operation.OR);
+    }
+
     private void registerCommon(FMLCommonSetupEvent event) {
-        SpawnPlacements.register(BBEntities.DUST_BUNNY.get(), SpawnPlacements.Type.ON_GROUND, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, DustBunnyEntity::canBunnySpawn);
-        SpawnPlacements.register(BBEntities.MAID.get(), SpawnPlacements.Type.ON_GROUND, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, MaidEntity::canMaidSpawn);
         BBEffects.brewingRecipes();
 
         event.enqueueWork(() -> {
@@ -84,7 +89,7 @@ public class BellyButton {
     private void onPlayerCloned(PlayerEvent.Clone e) {
         if (e.isWasDeath()) {
             e.getOriginal().getCapability(PlayerNavelProvider.NAVEL_POS).ifPresent(oldStore -> {
-                e.getPlayer().getCapability(PlayerNavelProvider.NAVEL_POS).ifPresent(newStore -> {
+                e.getOriginal().getCapability(PlayerNavelProvider.NAVEL_POS).ifPresent(newStore -> {
                     newStore.copyFrom(oldStore);
                 });
             });

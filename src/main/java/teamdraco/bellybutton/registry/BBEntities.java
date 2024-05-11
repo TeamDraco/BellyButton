@@ -12,7 +12,7 @@ import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
 
 public class BBEntities {
-    public static final DeferredRegister<EntityType<?>> ENTITIES = DeferredRegister.create(ForgeRegistries.ENTITIES, BellyButton.MOD_ID);
+    public static final DeferredRegister<EntityType<?>> ENTITIES = DeferredRegister.create(ForgeRegistries.ENTITY_TYPES, BellyButton.MOD_ID);
 
     public static final RegistryObject<EntityType<DustBunnyEntity>> DUST_BUNNY = create("dust_bunny", EntityType.Builder.of(DustBunnyEntity::new, MobCategory.CREATURE).sized(1.0f, 1.0f));
     public static final RegistryObject<EntityType<MaidEntity>> MAID = create("maid", EntityType.Builder.of(MaidEntity::new, MobCategory.MONSTER).sized(0.6F, 1.95F).clientTrackingRange(8));

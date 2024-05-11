@@ -1,0 +1,11 @@
+{
+  "type": "bellybutton:add_spawn",
+  "category": "ambient",
+  "spawn": {
+    "type": "bellybutton:dust_bunny",
+    "minCount": 1,
+    "maxCount": 2,
+    "weight": 50
+  },
+  "structures": "minecraft:mineshaft"
+}

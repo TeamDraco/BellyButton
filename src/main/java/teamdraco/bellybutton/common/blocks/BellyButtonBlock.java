@@ -18,12 +18,9 @@ import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.ButtonBlock;
 import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.level.dimension.DimensionType;
 import net.minecraft.world.phys.BlockHitResult;
-import org.lwjgl.system.CallbackI;
-import teamdraco.bellybutton.capabilities.PlayerNavelData;
 import teamdraco.bellybutton.capabilities.PlayerNavelProvider;
-import teamdraco.bellybutton.common.dimension.NavelTeleporter;
+import teamdraco.bellybutton.common.levelgen.dimension.NavelTeleporter;
 import teamdraco.bellybutton.registry.BBDimension;
 import teamdraco.bellybutton.registry.BBItems;
 
@@ -42,11 +39,11 @@ public class BellyButtonBlock extends ButtonBlock {
         if(!worldIn.isClientSide) {
             player.playNotifySound(SoundEvents.WOOL_BREAK, SoundSource.BLOCKS, 0.8f, 1.0f);
             player.swing(handIn, true);
-            if (this.RANDOM.nextInt(50) == 0) {
+            if (worldIn.random.nextInt(50) == 0) {
                 ItemEntity itemEntity = new ItemEntity(player.getCommandSenderWorld(), (double) pos.getX() + 0.5D, pos.getY() + 0.5D, (double) pos.getZ() + 0.5D, new ItemStack(BBItems.LINT.get(), 1));
                 player.getCommandSenderWorld().addFreshEntity(itemEntity);
             }
-            if (this.RANDOM.nextInt(5000) == 0) {
+            if (worldIn.random.nextInt(5000) == 0) {
                 ItemEntity itemEntity = new ItemEntity(player.getCommandSenderWorld(), (double) pos.getX() + 0.5D, pos.getY() + 0.5D, (double) pos.getZ() + 0.5D, new ItemStack(BBItems.MUSIC_DISC_BELLY_BOPPIN.get(), 1));
                 player.getCommandSenderWorld().addFreshEntity(itemEntity);
             }

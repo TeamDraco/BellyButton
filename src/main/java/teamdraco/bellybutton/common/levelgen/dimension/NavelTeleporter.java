@@ -1,4 +1,4 @@
-package teamdraco.bellybutton.common.dimension;
+package teamdraco.bellybutton.common.levelgen.dimension;
 
 import net.minecraft.server.level.ServerLevel;
 import net.minecraftforge.common.util.ITeleporter;

@@ -2,9 +2,7 @@
   "temperature": 0.8,
   "downfall": 0,
   "precipitation": "none",
-  "category": "none",
   "creature_spawn_probability": 0,
-  "forge:registry_name": "bellybutton:the_navel",
   "effects": {
     "sky_color": 16759188,
     "fog_color": 16775106,
@@ -13,7 +11,16 @@
     "grass_color": 1013269,
     "foliage_color": 1067023
   },
-  "spawners": {},
+  "spawners": {
+    "misc": [
+      {
+        "type": "bellybutton:dust_bunny",
+        "weight": 10,
+        "minCount": 1,
+        "maxCount": 1
+      }
+    ]
+  },
   "spawn_costs": {},
   "carvers": {},
   "features": []

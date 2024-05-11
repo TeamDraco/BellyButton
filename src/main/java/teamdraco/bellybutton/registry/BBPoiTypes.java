@@ -10,7 +10,5 @@ import teamdraco.bellybutton.BellyButton;
 public class BBPoiTypes {
     public static final DeferredRegister<PoiType> POIS = DeferredRegister.create(ForgeRegistries.POI_TYPES, BellyButton.MOD_ID);
 
-    public static final RegistryObject<PoiType> NAVEL_CAVITY = POIS.register("poi_navel_cavity", () ->
-            new PoiType("poi_navel_cavity", ImmutableSet.of(), 1, 1));
-
+    public static final RegistryObject<PoiType> NAVEL_CAVITY = POIS.register("poi_navel_cavity", () -> new PoiType(ImmutableSet.of(), 1, 1));
 }

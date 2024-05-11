@@ -8,6 +8,7 @@ import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundEvents;
+import net.minecraft.util.RandomSource;
 import net.minecraft.world.DifficultyInstance;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
@@ -25,6 +26,7 @@ import net.minecraft.world.item.Items;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.ServerLevelAccessor;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.pathfinder.Path;
@@ -83,7 +85,7 @@ public class DustBunnyEntity extends PathfinderMob {
         this.xpReward = size;
     }
 
-    public static boolean canBunnySpawn(EntityType<? extends DustBunnyEntity> animal, BlockGetter worldIn, MobSpawnType reason, BlockPos pos, Random random) {
+    public static boolean canBunnySpawn(EntityType<? extends DustBunnyEntity> animal, LevelAccessor worldIn, MobSpawnType reason, BlockPos pos, RandomSource random) {
         return worldIn.getBlockState(pos.above()).isAir();
     }
 

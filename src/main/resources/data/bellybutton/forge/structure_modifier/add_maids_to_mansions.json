@@ -1,0 +1,11 @@
+{
+  "type": "bellybutton:add_spawn",
+  "category": "monster",
+  "spawn": {
+    "type": "bellybutton:maid",
+    "minCount": 1,
+    "maxCount": 2,
+    "weight": 50
+  },
+  "structures": "minecraft:mansion"
+}

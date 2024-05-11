@@ -17,7 +17,7 @@ public class BBItems {
     public static final RegistryObject<Item> LINT = ITEMS.register("lint", () -> new Item(new Item.Properties().tab(BellyButton.GROUP)));
     public static final RegistryObject<Item> VACUUM = ITEMS.register("vacuum", () -> new Item(new Item.Properties().tab(BellyButton.GROUP).stacksTo(1)));
     public static final RegistryObject<Item> DUST_BUNNY = ITEMS.register("dust_bunny", () -> new DustBunnyItem(BBEntities.DUST_BUNNY, new Item.Properties().tab(BellyButton.GROUP).stacksTo(1)));
-    public static final RegistryObject<Item> MUSIC_DISC_BELLY_BOPPIN = ITEMS.register("music_disc_belly_boppin", () -> new RecordItem(15, BBSounds.BELLY_BOPPIN, new Item.Properties().tab(BellyButton.GROUP).stacksTo(1).rarity(Rarity.EPIC)));
+    public static final RegistryObject<Item> MUSIC_DISC_BELLY_BOPPIN = ITEMS.register("music_disc_belly_boppin", () -> new RecordItem(15, BBSounds.BELLY_BOPPIN, new Item.Properties().tab(BellyButton.GROUP).stacksTo(1).rarity(Rarity.EPIC), 3187));
     public static final RegistryObject<Item> ITCHY_SWEATER = ITEMS.register("itchy_sweater", () -> new ItchySweaterItem(ArmorMaterials.LEATHER, EquipmentSlot.CHEST, new Item.Properties().tab(BellyButton.GROUP).stacksTo(1)));
     public static final RegistryObject<Item> MAID_HAIRBAND = ITEMS.register("maid_hairband", () -> new MaidArmorItem(ArmorMaterials.LEATHER, EquipmentSlot.HEAD, new Item.Properties().tab(BellyButton.GROUP).stacksTo(1)));
     public static final RegistryObject<Item> MAID_DRESS = ITEMS.register("maid_dress", () -> new MaidArmorItem(ArmorMaterials.LEATHER, EquipmentSlot.CHEST, new Item.Properties().tab(BellyButton.GROUP).stacksTo(1)));

@@ -9,9 +9,12 @@ import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.block.model.ItemTransforms;
 import net.minecraft.client.renderer.entity.RenderLayerParent;
 import net.minecraft.client.renderer.entity.layers.RenderLayer;
+import net.minecraft.client.renderer.texture.OverlayTexture;
+import net.minecraft.client.resources.model.BakedModel;
 import net.minecraft.world.entity.HumanoidArm;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.item.ItemStack;
+import teamdraco.bellybutton.registry.BBItems;
 
 public class VacuumHeldItemLayer<T extends LivingEntity, M extends EntityModel<T> & ArmedModel> extends RenderLayer<T, M> {
 
@@ -31,23 +34,29 @@ public class VacuumHeldItemLayer<T extends LivingEntity, M extends EntityModel<T
                 p_117204_.scale(0.5F, 0.5F, 0.5F);
             }
 
-            this.renderArmWithItem(p_117207_, itemstack1, ItemTransforms.TransformType.THIRD_PERSON_RIGHT_HAND, HumanoidArm.RIGHT, p_117204_, p_117205_, p_117206_);
-            this.renderArmWithItem(p_117207_, itemstack, ItemTransforms.TransformType.THIRD_PERSON_LEFT_HAND, HumanoidArm.LEFT, p_117204_, p_117205_, p_117206_);
+            this.renderArmWithItem(itemstack1, ItemTransforms.TransformType.THIRD_PERSON_RIGHT_HAND, HumanoidArm.RIGHT, p_117204_, p_117205_, p_117206_, p_117206_);
+            this.renderArmWithItem(itemstack, ItemTransforms.TransformType.THIRD_PERSON_LEFT_HAND, HumanoidArm.LEFT, p_117204_, p_117205_, p_117206_, p_117206_);
             p_117204_.popPose();
         }
     }
 
-    protected void renderArmWithItem(LivingEntity p_117185_, ItemStack p_117186_, ItemTransforms.TransformType p_117187_, HumanoidArm p_117188_, PoseStack p_117189_, MultiBufferSource p_117190_, int p_117191_) {
+
+    protected void renderArmWithItem(ItemStack p_117186_, ItemTransforms.TransformType p_117187_, HumanoidArm p_117188_, PoseStack p_117189_, MultiBufferSource p_117190_, int light, int p_117191_) {
         if (!p_117186_.isEmpty()) {
             p_117189_.pushPose();
             this.getParentModel().translateToHand(p_117188_, p_117189_);
             p_117189_.mulPose(Vector3f.XP.rotationDegrees(-110.0F));
             p_117189_.mulPose(Vector3f.YP.rotationDegrees(180.0F));
             boolean flag = p_117188_ == HumanoidArm.LEFT;
-            p_117189_.translate((double)((float)(flag ? -1 : 1) / 16.0F), -0.05D, -0.525D);
-            Minecraft.getInstance().getItemInHandRenderer().renderItem(p_117185_, p_117186_, p_117187_, flag, p_117189_, p_117190_, p_117191_);
+            p_117189_.translate(((float)(flag ? -1 : 1) / 16.0F), -0.05D, -0.525D);
+
+            Minecraft mc = Minecraft.getInstance();
+            BakedModel model = mc.getItemRenderer().getModel(new ItemStack(BBItems.VACUUM.get()), mc.level, null, 0);
+
+            Minecraft.getInstance().getItemRenderer().render(p_117186_, p_117187_, flag, p_117189_, p_117190_, light, OverlayTexture.NO_OVERLAY, model);
             p_117189_.popPose();
         }
+
     }
 
 }

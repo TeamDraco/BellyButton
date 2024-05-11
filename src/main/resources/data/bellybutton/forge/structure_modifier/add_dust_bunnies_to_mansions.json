@@ -1,0 +1,11 @@
+{
+  "type": "bellybutton:add_spawn",
+  "category": "creature",
+  "spawn": {
+    "type": "bellybutton:dust_bunny",
+    "minCount": 1,
+    "maxCount": 1,
+    "weight": 50
+  },
+  "structures": "minecraft:mansion"
+}

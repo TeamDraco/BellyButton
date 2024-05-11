@@ -15,7 +15,6 @@ import javax.annotation.Nonnull;
 
 public class PlayerNavelProvider implements ICapabilityProvider, INBTSerializable<CompoundTag> {
     public static Capability<PlayerNavelData> NAVEL_POS = CapabilityManager.get(new CapabilityToken<>(){});
-
     private PlayerNavelData navelData = null;
     private final LazyOptional<PlayerNavelData> opt = LazyOptional.of(this::createNavelData);
 
