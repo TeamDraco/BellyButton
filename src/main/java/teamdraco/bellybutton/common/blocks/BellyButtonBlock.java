@@ -19,7 +19,7 @@ import net.minecraft.world.level.block.ButtonBlock;
 import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.BlockHitResult;
-import teamdraco.bellybutton.capabilities.PlayerNavelProvider;
+import teamdraco.bellybutton.capabilities.NavelProvider;
 import teamdraco.bellybutton.common.levelgen.dimension.NavelTeleporter;
 import teamdraco.bellybutton.registry.BBDimension;
 import teamdraco.bellybutton.registry.BBItems;
@@ -68,12 +68,7 @@ public class BellyButtonBlock extends ButtonBlock {
             NavelTeleporter tp = new NavelTeleporter(serverlevel);
 
             tp.placeEntity(entity, (ServerLevel) level, serverlevel, entity.getYRot(), e -> {
-                thrower.getCapability(PlayerNavelProvider.NAVEL_POS).ifPresent(navelData -> {
-                    if (navelData.getPosY() == 0) {
-                        initialTravel(serverlevel, pos, thrower);
-                    }
-                    thrower.moveTo(navelData.getPosX(), navelData.getPosY(), navelData.getPosZ());
-                });
+                thrower.getCapability(NavelProvider.NAVEL_POS).ifPresent(navelData -> travelToNavel(serverlevel, pos, thrower));
 
                 return entity;
             });
@@ -83,16 +78,20 @@ public class BellyButtonBlock extends ButtonBlock {
     }
 
     // todo - spread navels out on multiplayer
-    private static void initialTravel(ServerLevel level, BlockPos pos, Player player) {
-        makeHole(level, pos);
+    private static void travelToNavel(ServerLevel level, BlockPos pos, Player player) {
+        player.getCapability(NavelProvider.NAVEL_POS).ifPresent(navelData -> {
 
-        player.getCapability(PlayerNavelProvider.NAVEL_POS).ifPresent(navelData -> {
+            BlockPos navelPos = new BlockPos(navelData.getPosX(), navelData.getPosY(), navelData.getPosZ());
+
             navelData.setPosX(pos.getX());
             navelData.setPosY(pos.getY());
             navelData.setPosZ(pos.getZ());
 
-            if (navelData.getPosY() == 0) {
-                navelData.setPosY(player.getRandom().nextInt(5));
+            player.moveTo(navelPos, 0.0F, 0.0F);
+
+            if (!navelData.hasVisited()) {
+                makeHole(level, navelPos);
+                navelData.setVisited(true);
             }
 
         });
@@ -102,7 +101,15 @@ public class BellyButtonBlock extends ButtonBlock {
         int i = pos.getX();
         int j = pos.getY() - 1;
         int k = pos.getZ();
-        BlockPos.betweenClosed(i - 4, j + 1, k - 4, i + 4, j + 3, k + 4).forEach((p_207578_) -> level.setBlockAndUpdate(p_207578_, Blocks.AIR.defaultBlockState()));
+        var space = BlockPos.betweenClosed(i - 4, j + 1, k - 4, i + 4, j + 3, k + 4);
+
+        for (BlockPos posToClear : space) {
+            if (level.getBlockState(posToClear).is(Blocks.WHITE_TERRACOTTA)) {
+                level.setBlockAndUpdate(posToClear, Blocks.AIR.defaultBlockState());
+
+            }
+        }
+
         //level.setBlock(pos, BBBlocks.BELLY_BUTTON.get().defaultBlockState().setValue(BlockStateProperties.FACING, Direction.UP).setValue(FACE, AttachFace.FLOOR), 2001);
     }
 

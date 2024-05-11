@@ -13,15 +13,15 @@ import org.jetbrains.annotations.Nullable;
 
 import javax.annotation.Nonnull;
 
-public class PlayerNavelProvider implements ICapabilityProvider, INBTSerializable<CompoundTag> {
-    public static Capability<PlayerNavelData> NAVEL_POS = CapabilityManager.get(new CapabilityToken<>(){});
-    private PlayerNavelData navelData = null;
-    private final LazyOptional<PlayerNavelData> opt = LazyOptional.of(this::createNavelData);
+public class NavelProvider implements ICapabilityProvider, INBTSerializable<CompoundTag> {
+    public static Capability<NavelData> NAVEL_POS = CapabilityManager.get(new CapabilityToken<>(){});
+    private NavelData navelData = null;
+    private final LazyOptional<NavelData> opt = LazyOptional.of(this::createNavelData);
 
     @Nonnull
-    private PlayerNavelData createNavelData() {
+    private NavelData createNavelData() {
         if (navelData == null) {
-            navelData = new PlayerNavelData();
+            navelData = new NavelData();
         }
         return navelData;
     }

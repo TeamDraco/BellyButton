@@ -18,8 +18,8 @@ import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
-import teamdraco.bellybutton.capabilities.PlayerNavelData;
-import teamdraco.bellybutton.capabilities.PlayerNavelProvider;
+import teamdraco.bellybutton.capabilities.NavelData;
+import teamdraco.bellybutton.capabilities.NavelProvider;
 import teamdraco.bellybutton.common.entities.DustBunnyEntity;
 import teamdraco.bellybutton.common.entities.EvilDustBunnyEntity;
 import teamdraco.bellybutton.common.entities.MaidEntity;
@@ -79,25 +79,23 @@ public class BellyButton {
     };
 
     private void attachCapabilitiesPlayer(AttachCapabilitiesEvent<Entity> e) {
-        if (e.getObject() instanceof Player) {
-            if (!e.getObject().getCapability(PlayerNavelProvider.NAVEL_POS).isPresent()) {
-                e.addCapability(new ResourceLocation(BellyButton.MOD_ID, "navelpos"), new PlayerNavelProvider());
+        if (e.getObject() instanceof Player player) {
+            if (!player.getCapability(NavelProvider.NAVEL_POS).isPresent()) {
+                e.addCapability(new ResourceLocation(BellyButton.MOD_ID, "navelpos"), new NavelProvider());
             }
         }
     }
 
     private void onPlayerCloned(PlayerEvent.Clone e) {
         if (e.isWasDeath()) {
-            e.getOriginal().getCapability(PlayerNavelProvider.NAVEL_POS).ifPresent(oldStore -> {
-                e.getOriginal().getCapability(PlayerNavelProvider.NAVEL_POS).ifPresent(newStore -> {
-                    newStore.copyFrom(oldStore);
-                });
+            e.getOriginal().getCapability(NavelProvider.NAVEL_POS).ifPresent(oldStore -> {
+                e.getOriginal().getCapability(NavelProvider.NAVEL_POS).ifPresent(newStore -> newStore.copyFrom(oldStore));
             });
         }
     }
 
     private void registerCapabilities(RegisterCapabilitiesEvent e) {
-        e.register(PlayerNavelData.class);
+        e.register(NavelData.class);
     }
 
 }
